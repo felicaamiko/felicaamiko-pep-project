@@ -31,7 +31,7 @@ public class SocialMediaController { //test with thunder client
         app.get("login", this::loginHandler);
         
         app.get("messages", this::getAllMessagesHandler);
-        app.get("messages/{message_id}", this::getMessagebyID);
+        //app.get("messages/{message_id}", this::getMessagebyID);
         app.delete("messages/{message_id}", this::deleteMessagebyID);
         app.get("accounts", this::accountsHandler);
         return app;
