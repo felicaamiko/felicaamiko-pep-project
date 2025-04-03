@@ -62,11 +62,24 @@ public class SocialMediaController { //test with thunder client
     }
 
     private void getMessagebyID(Context context){
-        context.json(messageService.getMessagebyID(context.pathParam("message_id"))); //nullptrexception
-    }
+        try {
+            context.json(messageService.getMessagebyID(context.pathParam("message_id"))); //nullptrexception
+        } catch (Exception e) {
+            // TODO: handle exception
+            e.getMessage();
+            context.status(200); //usually 404 would be used?
+        }
+            }
 
     private void deleteMessagebyID(Context context){
-        context.json(messageService.getMessagebyID(context.pathParam("message_id")));
+        try {
+            context.json(messageService.deleteMessagebyID(context.pathParam("message_id")));
+        } catch (Exception e) {
+            // TODO: handle exception
+            e.getMessage();
+            context.status(400);
+        }
+
     }
 
     private void accountsHandler(Context context){
