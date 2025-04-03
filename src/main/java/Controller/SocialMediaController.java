@@ -33,6 +33,7 @@ public class SocialMediaController { //test with thunder client
         app.get("messages", this::getAllMessagesHandler);
         app.get("messages/{message_id}", this::getMessagebyID);
         app.delete("messages/{message_id}", this::deleteMessagebyID);
+        //app.patch("messages/{message_id}", this::updateMessagebyID);
         app.get("accounts", this::accountsHandler);
         return app;
     }
@@ -77,10 +78,21 @@ public class SocialMediaController { //test with thunder client
         } catch (Exception e) {
             // TODO: handle exception
             e.getMessage();
-            context.status(400);
+            context.status(200);
         }
 
     }
+
+    // private void updateMessagebyID(Context context){
+    //     try {
+    //         context.json(messageService.updateMessagebyID(context.pathParam("message_id")));
+    //     } catch (Exception e) {
+    //         // TODO: handle exception
+    //         e.getMessage();
+    //         context.status(400);
+    //     }
+
+    // }
 
     private void accountsHandler(Context context){
         context.json("accounts");

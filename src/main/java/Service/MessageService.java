@@ -45,7 +45,9 @@ public class MessageService {
     public Message deleteMessagebyID(String message_id)
     {
         int messageint = Integer.parseInt(message_id);
-        return messageDAO.deleteMessagebyID(messageint);
+        Message messagetoreturn = messageDAO.getMessagebyID(messageint);
+        messageDAO.deleteMessagebyID(messageint);
+        return messagetoreturn;
     }
 
 }
