@@ -5,6 +5,13 @@ import Service.MessageService;
 import io.javalin.Javalin;
 import io.javalin.http.Context;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
+//my imports below
+import Model.Account;
+import Model.Message;
+
 /**
  * TODO: You will need to write your own endpoints and handlers for your controller. The endpoints you will need can be
  * found in readme.md as well as the test cases. You should
@@ -47,11 +54,23 @@ public class SocialMediaController { //test with thunder client
 
     }
 
-    private void registerHandler(Context context){
-        // context.json(AccountService.createAccount(context.bodyAsClass()));
-        context.result(context.body());
-         System.out.println("afddsafs");
-         System.out.println(context.json(context.body()));
+    private void registerHandler(Context context) throws JsonProcessingException{
+        //context.json(AccountService.createAccount(context.bodyAsClass()));
+        
+        ObjectMapper mapper = new ObjectMapper();
+        Account account = mapper.readValue(context.body(), Account.class);
+        Account registeredAccount = accountService.createAccount(account);
+        if(registeredAccount != null){
+            context.status(200);
+            context.json(mapper.writeValueAsString(registeredAccount));
+        }else{
+            context.status(400);
+        }
+        
+        
+        //context.result(context.body());
+        System.out.println("afddsafs");
+        
     }
 
     private void loginHandler(Context context){
