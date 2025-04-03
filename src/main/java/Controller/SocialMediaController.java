@@ -27,7 +27,7 @@ public class SocialMediaController { //test with thunder client
     public Javalin startAPI() {
         Javalin app = Javalin.create();
         app.get("example-endpoint", this::exampleHandler);
-        app.get("register", this::registerHandler);
+        app.post("register", this::registerHandler);
         app.get("login", this::loginHandler);
         
         app.get("messages", this::getAllMessagesHandler);
@@ -44,10 +44,14 @@ public class SocialMediaController { //test with thunder client
      */
     private void exampleHandler(Context context) {
         context.json("sample text");
+
     }
 
     private void registerHandler(Context context){
-        context.json("register");
+        // context.json(AccountService.createAccount(context.bodyAsClass()));
+        context.result(context.body());
+         System.out.println("afddsafs");
+         System.out.println(context.json(context.body()));
     }
 
     private void loginHandler(Context context){
@@ -85,7 +89,7 @@ public class SocialMediaController { //test with thunder client
 
     // private void updateMessagebyID(Context context){
     //     try {
-    //         context.json(messageService.updateMessagebyID(context.pathParam("message_id")));
+    //         context.json(messageService.updateMessagebyID(context.pathParam("message_id"))); //more info in http body
     //     } catch (Exception e) {
     //         // TODO: handle exception
     //         e.getMessage();

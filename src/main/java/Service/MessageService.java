@@ -50,4 +50,11 @@ public class MessageService {
         return messagetoreturn;
     }
 
+    // public Message updateMessagebyID(String message_id)
+    // {
+    //     int messageint = Integer.parseInt(message_id);
+
+    //     return messageDAO.updateMessagebyID(messageint);
+    // }
+
 }
