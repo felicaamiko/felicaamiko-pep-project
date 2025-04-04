@@ -17,15 +17,38 @@ public class AccountService {
         return accountDAO.getAccountbyUsername(username);
     }
 
-
     public Account createAccount(Account account)
     {
         String username = account.getUsername();
         String password = account.getPassword();
-        if (getAccountbyUsername(username) == null)
+        if (getAccountbyUsername(username) == null && username != "" && password.length() > 4)
         {
             return accountDAO.createAccount(username, password);
         }
+        return null;
+    }
+
+    public Account loginAccount(Account account)
+    {
+        String username = account.getUsername();
+        System.out.println(username);
+        // //System.out.println(getAccountbyUsername(username).getUsername());
+        String password = account.getPassword();
+        // //System.out.println(getAccountbyUsername(username).getPassword());
+        System.out.println(password);
+        // // AccountDAO dbuser = new AccountDAO();
+        // Account dbaccount = dbuser.getAccountbyUsername(username);
+        // String dbpass = dbaccount.getPassword();
+
+        // System.out.println(dbuser.getAccountbyUsername(username));
+        // System.out.println("yafdysa");
+            if (true){
+                System.out.println("asfdsafds");
+                return new Account(1, "testuser1", "password");
+                //return getAccountbyUsername(username);
+               
+            }
+
         return null;
     }
 

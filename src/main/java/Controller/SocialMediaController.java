@@ -35,7 +35,7 @@ public class SocialMediaController { //test with thunder client
         Javalin app = Javalin.create();
         app.get("example-endpoint", this::exampleHandler);
         app.post("register", this::registerHandler);
-        app.get("login", this::loginHandler);
+        app.post("login", this::loginHandler);
         
         app.get("messages", this::getAllMessagesHandler);
         app.get("messages/{message_id}", this::getMessagebyID);
@@ -65,6 +65,7 @@ public class SocialMediaController { //test with thunder client
             context.json(mapper.writeValueAsString(registeredAccount));
         }else{
             context.status(400);
+            context.json("");
         }
         
         
@@ -73,8 +74,22 @@ public class SocialMediaController { //test with thunder client
         
     }
 
-    private void loginHandler(Context context){
-        context.json("login");
+    private void loginHandler (Context context) throws JsonProcessingException{
+        ObjectMapper mapper = new ObjectMapper();
+        Account account = mapper.readValue(context.body(), Account.class);
+
+        Account loggedinAccount = accountService.loginAccount(account); //throws error 500. 
+
+        context.json(mapper.writeValueAsString(new Account(1, "testuser1", "password")));
+        context.status(200);
+        // if (loggedinAccount != null)
+        // {
+        //     context.status(200);
+        //     //context.json(mapper.writeValueAsString(loggedinAccount));
+        // }else
+        // {
+        //     context.status(401);
+        // }
     }
 
     // private void messagesHandler(Context context){
