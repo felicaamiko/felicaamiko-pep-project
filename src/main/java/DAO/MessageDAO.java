@@ -125,13 +125,15 @@ public class MessageDAO {//
 
             preparedStatement.setInt(2, message.getMessage_id());
 
-            ResultSet rs = preparedStatement.executeQuery();
+            preparedStatement.executeUpdate();
 
-            while(rs.next())
-            {
-                Message updatedMessage = new Message(rs.getInt("message_id"), rs.getInt("posted_by"), message.getMessage_text(), rs.getLong("time_posted_epoch"));
-                return updatedMessage;
-            }
+            // while(rs.next())
+            // {
+            //     Message updatedMessage = new Message(rs.getInt("message_id"), rs.getInt("posted_by"), message.getMessage_text(), rs.getLong("time_posted_epoch"));
+            //     return updatedMessage;
+            // }
+            Message updatedMessage = new Message(message.getMessage_id(), message.getPosted_by(), message.getMessage_text(), message.getTime_posted_epoch());
+            return updatedMessage;
         } catch (Exception e) {
             // TODO: handle exception
             System.out.println(e.getMessage());

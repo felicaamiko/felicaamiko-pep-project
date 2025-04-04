@@ -141,16 +141,19 @@ public class SocialMediaController { //test with thunder client
     private void updateMessagebyID(Context context) throws JsonProcessingException{
         ObjectMapper mapper = new ObjectMapper();
         Message message = mapper.readValue(context.body(), Message.class);
+        System.out.println(message.getMessage_text());
         //String messagetext = mapper.readTree(context.body()).get("message_text").asText(); //https://mkyong.com/java/jackson-how-to-parse-json/
         message.setMessage_id(Integer.parseInt(context.pathParam("message_id")));
         Message updatedMessage = messageService.updateMessagebyID(message);
-
+        try{
         if (updatedMessage == null){
             context.status(400);
         }else{
             context.json(mapper.writeValueAsString(updatedMessage));
         }
-
+    }catch(Exception e){
+        context.status(400);
+    }
         // try {
         //     context.json(messageService.updateMessagebyID(context.pathParam("message_id"))); //more info in http body
         // } catch (Exception e) {

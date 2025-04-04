@@ -66,12 +66,23 @@ public class MessageService {
     public Message updateMessagebyID(Message message)
     {
         //int messageint = Integer.parseInt(message_id);
-        //Message messagetoUpdate = getMessagebyID(message_id);
+        Message messagetoUpdate = getMessagebyID(String.valueOf(message.getMessage_id()));
+
+        //System.out.println(messagetoUpdate.message_text);
+        if (messagetoUpdate == null){
+            System.out.println("message is null");
+            return null;
+        }
+        message.setPosted_by(messagetoUpdate.getPosted_by());
+        message.setTime_posted_epoch(messagetoUpdate.getTime_posted_epoch());
         //we don't change postedby, message id...
         //we change message text
         //do we change time posted epoch?
-        // if(message.getMessage_text() != "" && messagetext.length()<=255)
+        // if(messagetoUpdate != null)//message.getMessage_text() != "" && messagetext.length()<=255)
         // {
+
+
+
         return messageDAO.updateMessagebyID(message);
         // }
         // return null;
