@@ -42,7 +42,7 @@ public class SocialMediaController { //test with thunder client
         app.post("messages/", this::createMessage);
         app.delete("messages/{message_id}", this::deleteMessagebyID);
         app.get("/accounts/{account_id}/messages", this::getMessagesbyAccount);
-        //app.patch("messages/{message_id}", this::updateMessagebyID);
+        app.patch("messages/{message_id}", this::updateMessagebyID);
         app.get("accounts", this::accountsHandler);
         return app;
     }
@@ -88,12 +88,12 @@ public class SocialMediaController { //test with thunder client
             context.status(200);
             context.json(mapper.writeValueAsString(loggedinAccount));
         }
-        //else
-        // {
-        //     context.status(401);
-        // }
-        context.json(mapper.writeValueAsString(new Account(1, "testuser1", "password")));
-        context.status(200);
+        else
+        {
+            context.status(401);
+        }
+        // context.json(mapper.writeValueAsString(new Account(1, "testuser1", "password")));
+        // context.status(200);
     }
 
     // private void messagesHandler(Context context){
@@ -138,16 +138,28 @@ public class SocialMediaController { //test with thunder client
 
     }
 
-    // private void updateMessagebyID(Context context){
-    //     try {
-    //         context.json(messageService.updateMessagebyID(context.pathParam("message_id"))); //more info in http body
-    //     } catch (Exception e) {
-    //         // TODO: handle exception
-    //         e.getMessage();
-    //         context.status(400);
-    //     }
+    private void updateMessagebyID(Context context) throws JsonProcessingException{
+        ObjectMapper mapper = new ObjectMapper();
+        Message message = mapper.readValue(context.body(), Message.class);
+        //String messagetext = mapper.readTree(context.body()).get("message_text").asText(); //https://mkyong.com/java/jackson-how-to-parse-json/
+        message.setMessage_id(Integer.parseInt(context.pathParam("message_id")));
+        Message updatedMessage = messageService.updateMessagebyID(message);
 
-    // }
+        if (updatedMessage == null){
+            context.status(400);
+        }else{
+            context.json(mapper.writeValueAsString(updatedMessage));
+        }
+
+        // try {
+        //     context.json(messageService.updateMessagebyID(context.pathParam("message_id"))); //more info in http body
+        // } catch (Exception e) {
+        //     // TODO: handle exception
+        //     e.getMessage();
+        //     context.status(400);
+        // }
+
+    }
 
     private void accountsHandler(Context context){
         context.json("accounts");
@@ -156,7 +168,7 @@ public class SocialMediaController { //test with thunder client
     private void getMessagesbyAccount(Context context)
     {
         context.json(messageService.getMessagesbyAccount(context.pathParam("account_id")));
-        
+
     }
 
 }

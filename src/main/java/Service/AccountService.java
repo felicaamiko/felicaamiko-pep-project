@@ -46,7 +46,6 @@ public class AccountService {
                 System.out.println("asfdsafds");
                 //return new Account(1, "testuser1", "password");
                 return getAccountbyUsername(username);
-               
             }
         }
         // System.out.println(dbuser.getAccountbyUsername(username));

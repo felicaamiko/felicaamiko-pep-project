@@ -63,12 +63,19 @@ public class MessageService {
         return messagetoreturn;
     }
 
-    // public Message updateMessagebyID(String message_id)
-    // {
-    //     int messageint = Integer.parseInt(message_id);
-
-    //     return messageDAO.updateMessagebyID(messageint);
-    // }
+    public Message updateMessagebyID(Message message)
+    {
+        //int messageint = Integer.parseInt(message_id);
+        //Message messagetoUpdate = getMessagebyID(message_id);
+        //we don't change postedby, message id...
+        //we change message text
+        //do we change time posted epoch?
+        // if(message.getMessage_text() != "" && messagetext.length()<=255)
+        // {
+        return messageDAO.updateMessagebyID(message);
+        // }
+        // return null;
+    }
 
     public List<Message> getMessagesbyAccount(String account_id){
         int accountint = Integer.parseInt(account_id);

@@ -111,30 +111,34 @@ public class MessageDAO {//
         return null;
     }
 
-    // public Message updateMessagebyID(int message_id){
-    //     Connection connection = ConnectionUtil.getConnection();
-    //     try {
-    //         String sql = "UPDATE message SET message_text = ?, time_posted_epoch = ? WHERE message_id = ?";
+    public Message updateMessagebyID(Message message){
+        Connection connection = ConnectionUtil.getConnection();
+        if (message.getMessage_text().length()<1 || message.getMessage_text().length()>255){
+            return null;
+        }else{
+        try {
+            String sql = "UPDATE message SET message_text = ? WHERE message_id = ?";
 
-    //         PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
             
-    //         preparedStatement.setString(1, message_text);
-    //         preparedStatement.setBigInteger(2, time_posted_epoch);
-    //         preparedStatement.setInt(3, message_id);
+            preparedStatement.setString(1, message.getMessage_text());
 
-    //         ResultSet rs = preparedStatement.executeQuery();
+            preparedStatement.setInt(2, message.getMessage_id());
 
-    //         while(rs.next())
-    //         {
-    //             Message message = new Message(rs.getInt("message_id"), rs.getInt("posted_by"), rs.getString("message_text"), rs.getLong("time_posted_epoch"));
-    //             return message;
-    //         }
-    //     } catch (Exception e) {
-    //         // TODO: handle exception
-    //         System.out.println(e.getMessage());
-    //     }
-    //     return null;
-    // }
+            ResultSet rs = preparedStatement.executeQuery();
+
+            while(rs.next())
+            {
+                Message updatedMessage = new Message(rs.getInt("message_id"), rs.getInt("posted_by"), message.getMessage_text(), rs.getLong("time_posted_epoch"));
+                return updatedMessage;
+            }
+        } catch (Exception e) {
+            // TODO: handle exception
+            System.out.println(e.getMessage());
+        }
+        return null;
+    }
+    }
 
     public List<Message> getMessagesbyAccount(int accountint){
         Connection connection = ConnectionUtil.getConnection();
