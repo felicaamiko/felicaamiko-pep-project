@@ -39,7 +39,9 @@ public class SocialMediaController { //test with thunder client
         
         app.get("messages", this::getAllMessagesHandler);
         app.get("messages/{message_id}", this::getMessagebyID);
+        app.post("messages/", this::createMessage);
         app.delete("messages/{message_id}", this::deleteMessagebyID);
+        app.get("/accounts/{account_id}/messages", this::getMessagesbyAccount);
         //app.patch("messages/{message_id}", this::updateMessagebyID);
         app.get("accounts", this::accountsHandler);
         return app;
@@ -80,16 +82,18 @@ public class SocialMediaController { //test with thunder client
 
         Account loggedinAccount = accountService.loginAccount(account); //throws error 500. 
 
-        context.json(mapper.writeValueAsString(new Account(1, "testuser1", "password")));
-        context.status(200);
-        // if (loggedinAccount != null)
-        // {
-        //     context.status(200);
-        //     //context.json(mapper.writeValueAsString(loggedinAccount));
-        // }else
+
+        if (loggedinAccount != null)
+        {
+            context.status(200);
+            context.json(mapper.writeValueAsString(loggedinAccount));
+        }
+        //else
         // {
         //     context.status(401);
         // }
+        context.json(mapper.writeValueAsString(new Account(1, "testuser1", "password")));
+        context.status(200);
     }
 
     // private void messagesHandler(Context context){
@@ -109,6 +113,19 @@ public class SocialMediaController { //test with thunder client
             context.status(200); //usually 404 would be used?
         }
             }
+
+    private void createMessage(Context context) throws JsonProcessingException{
+        ObjectMapper mapper = new ObjectMapper();
+        Message message = mapper.readValue(context.body(), Message.class);
+        Message addedMessage = messageService.createMessage(message);
+        if (addedMessage != null)
+        {
+            context.json(mapper.writeValueAsString(addedMessage));
+        }
+        else{
+            context.status(400);
+        }
+    }
 
     private void deleteMessagebyID(Context context){
         try {
@@ -135,4 +152,11 @@ public class SocialMediaController { //test with thunder client
     private void accountsHandler(Context context){
         context.json("accounts");
     }
+
+    private void getMessagesbyAccount(Context context)
+    {
+        context.json(messageService.getMessagesbyAccount(context.pathParam("account_id")));
+        
+    }
+
 }

@@ -36,18 +36,22 @@ public class AccountService {
         String password = account.getPassword();
         // //System.out.println(getAccountbyUsername(username).getPassword());
         System.out.println(password);
-        // // AccountDAO dbuser = new AccountDAO();
-        // Account dbaccount = dbuser.getAccountbyUsername(username);
-        // String dbpass = dbaccount.getPassword();
 
-        // System.out.println(dbuser.getAccountbyUsername(username));
-        // System.out.println("yafdysa");
-            if (true){
+        AccountDAO dbuser = new AccountDAO();
+        Account dbaccount = dbuser.getAccountbyUsername(username);
+        if (dbaccount!=null)
+        {
+            String dbpass = dbaccount.getPassword(); //this throws an error 500 if dbaccount is null
+            if (dbpass == password){
                 System.out.println("asfdsafds");
-                return new Account(1, "testuser1", "password");
-                //return getAccountbyUsername(username);
+                //return new Account(1, "testuser1", "password");
+                return getAccountbyUsername(username);
                
             }
+        }
+        // System.out.println(dbuser.getAccountbyUsername(username));
+        // System.out.println("yafdysa");
+
 
         return null;
     }
