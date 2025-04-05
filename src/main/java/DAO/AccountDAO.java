@@ -43,16 +43,16 @@ public class AccountDAO {//
             preparedStatement.setString(1, username);
 
             ResultSet rs = preparedStatement.executeQuery();
-
-            if (username != null){
+            rs.next();
+            if (username != null && rs != null){
                 Account account = new Account(rs.getInt("account_id"), rs.getString("username"), rs.getString("password"));
                 return account;
             }
-
         } catch (Exception e) {
             // TODO: handle exception
             System.out.println(e.getMessage());
         }
+        System.out.println("null reached");
         return null;
     }
 

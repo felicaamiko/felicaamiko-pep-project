@@ -41,8 +41,10 @@ public class AccountService {
         Account dbaccount = dbuser.getAccountbyUsername(username);
         if (dbaccount!=null)
         {
+            System.out.println("dbacct found");
             String dbpass = dbaccount.getPassword(); //this throws an error 500 if dbaccount is null
-            if (dbpass == password){
+            System.out.println(dbpass);
+            if (dbpass.equals(password)){
                 System.out.println("asfdsafds");
                 //return new Account(1, "testuser1", "password");
                 return getAccountbyUsername(username);
@@ -50,7 +52,7 @@ public class AccountService {
         }
         // System.out.println(dbuser.getAccountbyUsername(username));
         // System.out.println("yafdysa");
-
+        System.out.println("dbacct was never found?");
 
         return null;
     }
