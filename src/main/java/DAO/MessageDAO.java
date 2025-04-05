@@ -7,8 +7,8 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-//mine below
 
+//mine below
 
 public class MessageDAO {//
     
@@ -48,6 +48,7 @@ public class MessageDAO {//
 
             ResultSet rs = preparedStatement.executeQuery();
 
+
             while(rs.next())
             {
                 Message message = new Message(rs.getInt("message_id"), rs.getInt("posted_by"), rs.getString("message_text"), rs.getLong("time_posted_epoch"));
@@ -80,12 +81,14 @@ public class MessageDAO {//
                 int generated_message_id = (int)rs.getInt(1);
                 return new Message(generated_message_id, message.getPosted_by(), message.getMessage_text(), message.getTime_posted_epoch());
             }
+
         } catch (Exception e) {
             // TODO: handle exception
             System.out.println(e.getMessage());
         }
         return null;
     }
+
 
 
     public Message deleteMessagebyID(int message_id){
@@ -169,3 +172,4 @@ public class MessageDAO {//
 
 
 }
+

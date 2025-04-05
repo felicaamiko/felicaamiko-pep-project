@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class AccountDAO {//
+
     public Account createAccount(String username, String password)
     {
         Connection connection = ConnectionUtil.getConnection();
@@ -48,10 +49,12 @@ public class AccountDAO {//
                 Account account = new Account(rs.getInt("account_id"), rs.getString("username"), rs.getString("password"));
                 return account;
             }
+
         } catch (Exception e) {
             // TODO: handle exception
             System.out.println(e.getMessage());
         }
+
         System.out.println("null reached");
         return null;
     }
@@ -89,4 +92,5 @@ public class AccountDAO {//
     //     }
     //     return null;
     // }
+
 }

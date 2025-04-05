@@ -34,6 +34,7 @@ public class SocialMediaController { //test with thunder client
     public Javalin startAPI() {
         Javalin app = Javalin.create();
         app.get("example-endpoint", this::exampleHandler);
+
         app.post("register", this::registerHandler);
         app.post("login", this::loginHandler);
         
@@ -43,6 +44,7 @@ public class SocialMediaController { //test with thunder client
         app.delete("messages/{message_id}", this::deleteMessagebyID);
         app.get("/accounts/{account_id}/messages", this::getMessagesbyAccount);
         app.patch("messages/{message_id}", this::updateMessagebyID);
+
         app.get("accounts", this::accountsHandler);
         return app;
     }
@@ -104,6 +106,7 @@ public class SocialMediaController { //test with thunder client
         context.json(messageService.getAllMessages());
     }
 
+
     private void getMessagebyID(Context context){
         try {
             context.json(messageService.getMessagebyID(context.pathParam("message_id"))); //nullptrexception
@@ -161,6 +164,7 @@ public class SocialMediaController { //test with thunder client
         //     e.getMessage();
         //     context.status(400);
         // }
+
 
     }
 
